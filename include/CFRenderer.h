@@ -14,6 +14,8 @@ public:
 
 	void clear();
 	void present();
+	void render(SDL_Texture*, SDL_Rect* renderQuad);
+	SDL_Texture* createTextureFromSurface(SDL_Surface*);
 
 	void close();
 private:

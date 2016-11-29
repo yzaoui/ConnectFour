@@ -22,8 +22,9 @@ endif()
 
 # Look up SDL2 and its modules, and add their directories to include path
 find_package(SDL2 REQUIRED)
-include_directories(include ${SDL2_INCLUDE_DIR})
+find_package(SDL2_image REQUIRED)
+include_directories(include ${SDL2_INCLUDE_DIR} ${SDL2_IMAGE_INCLUDE_DIR})
 file(GLOB SOURCES "src/*.cc")
 add_executable(main ${SOURCES})
-target_link_libraries(main ${SDL2_LIBRARY})
+target_link_libraries(main ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY})
 install(TARGETS main RUNTIME DESTINATION ${BIN_DIR})
