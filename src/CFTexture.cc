@@ -61,3 +61,10 @@ void CFTexture::render(int x, int y, SDL_Rect* clip) {
 	renderer_->render(texture_, &renderQuad);
 }
 
+int CFTexture::getWidth() const {
+	return width_;
+}
+
+int CFTexture::getHeight() const {
+	return height_;
+}

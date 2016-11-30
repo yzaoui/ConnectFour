@@ -14,6 +14,9 @@ public:
 
 	bool loadFromFile(std::string fileName);
 	void render(int x, int y, SDL_Rect* clip = nullptr);
+
+	int getWidth() const;
+	int getHeight() const;
 private:
 	SDL_Texture* texture_;
 	CFRenderer*& renderer_;
