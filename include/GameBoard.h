@@ -7,17 +7,21 @@ enum class Box {
 
 const int NUM_BOXES_HORIZONTAL = 7;
 const int NUM_BOXES_VERTICAL = 6;
+const int NUM_BOXES_WIN = 4;
 
 class GameBoard {
 public:
 	GameBoard();
 	void reset();
-	Box getBox(int x, int y);
+	Box getBox(int x, int y) const;
 	void play(int column);
-	int getColumnEmptyBox(int column);
 private:
 	Box boxes_[NUM_BOXES_HORIZONTAL][NUM_BOXES_VERTICAL];
 	Box playerTurn_;
+	bool won_;
+	int getColumnEmptyBox(int column);
+	bool checkWin() const;
+	void nextPlayer();
 };
 
 #endif

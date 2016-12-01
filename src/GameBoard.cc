@@ -11,24 +11,24 @@ void GameBoard::reset() {
 		}
 	}
 	playerTurn_ = Box::yellow;
+	won_ = false;
 }
 
-Box GameBoard::getBox(int x, int y) {
+Box GameBoard::getBox(int x, int y) const {
 	return boxes_[x][y];
 }
 
 void GameBoard::play(int column) {
-	int emptyBox = getColumnEmptyBox(column);
+	if(!won_) {
 
-	if (emptyBox >= 0) {
-		if (playerTurn_ == Box::yellow) {
-			boxes_[column][emptyBox] = Box::yellow;
+		int emptyBox = getColumnEmptyBox(column);
 
-			playerTurn_ = Box::red;
-		} else {
-			boxes_[column][emptyBox] = Box::red;
+		if (emptyBox >= 0) {
+			boxes_[column][emptyBox] = playerTurn_;
+		}
 
-			playerTurn_ = Box::yellow;
+		if (!(won_ = GameBoard::checkWin())) {
+			GameBoard::nextPlayer();
 		}
 	}
 }
@@ -41,4 +41,50 @@ int GameBoard::getColumnEmptyBox(int column) {
 	}
 
 	return -1;
+}
+
+bool GameBoard::checkWin() const {
+	int consecutiveBoxes;
+
+	/* Check Horizontal */
+	for (int y = NUM_BOXES_VERTICAL - 1; y >= 0; y--) {
+		consecutiveBoxes = 0;
+		for (int x = 0; x < NUM_BOXES_HORIZONTAL; x++) {
+			if (boxes_[x][y] == playerTurn_) {
+				consecutiveBoxes++;
+			} else {
+				consecutiveBoxes = 0;
+			}
+
+			if (consecutiveBoxes == NUM_BOXES_WIN) {
+				return true;
+			}
+		}
+	}
+
+	/* Check Vertical */
+	for (int x = 0; x < NUM_BOXES_HORIZONTAL; x++) {
+		consecutiveBoxes = 0;
+		for (int y = NUM_BOXES_VERTICAL - 1; y >= 0; y--) {
+			if (boxes_[x][y] == playerTurn_) {
+				consecutiveBoxes++;
+			} else {
+				consecutiveBoxes = 0;
+			}
+
+			if (consecutiveBoxes == NUM_BOXES_WIN) {
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
+void GameBoard::nextPlayer() {
+	if (playerTurn_ == Box::yellow) {
+		playerTurn_ = Box::red;
+	} else if (playerTurn_ == Box::red) {
+		playerTurn_ = Box::yellow;
+	}
 }
