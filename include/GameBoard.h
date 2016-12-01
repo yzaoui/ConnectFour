@@ -13,8 +13,11 @@ public:
 	GameBoard();
 	void reset();
 	Box getBox(int x, int y);
+	void play(int column);
+	int getColumnEmptyBox(int column);
 private:
 	Box boxes_[NUM_BOXES_HORIZONTAL][NUM_BOXES_VERTICAL];
+	Box playerTurn_;
 };
 
 #endif

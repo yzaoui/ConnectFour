@@ -77,6 +77,13 @@ int main(int argc, char** argv) {
 			while (SDL_PollEvent(&e) != 0) {
 				if (e.type == SDL_QUIT) {
 					quit = true;
+				} else if (e.type == SDL_MOUSEBUTTONDOWN) {
+					int x;
+					SDL_GetMouseState(&x, nullptr);
+
+					if (x > BOARD_OFFSET_WIDTH && x < SCREEN_WIDTH - BOARD_OFFSET_WIDTH) {
+						board.play((x - BOARD_OFFSET_WIDTH) / BOX_SIZE);
+					}
 				}
 			}
 
