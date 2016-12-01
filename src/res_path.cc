@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <SDL_filesystem.h>
+#include <SDL_stdinc.h>
 
 std::string getResourcePath() {
 
@@ -23,7 +24,7 @@ std::string getResourcePath() {
 		if (basePath != nullptr) {
 			//Must free basePath
 			baseRes = basePath;
-			free(basePath);
+			SDL_free(basePath);
 		} else {
 			//Log errors here
 			return "";
