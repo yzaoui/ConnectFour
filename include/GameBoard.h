@@ -22,6 +22,7 @@ private:
 	int getColumnEmptyBox(int column);
 	bool checkWin() const;
 	void nextPlayer();
+	bool consecutiveBoxWin(int x, int y, int& consecutiveBoxes) const;
 };
 
 #endif
