@@ -75,7 +75,8 @@ int main(int argc, char** argv) {
 			 ***************/
 
 			while (SDL_PollEvent(&e) != 0) {
-				if (e.type == SDL_QUIT) {
+				if (e.type == SDL_QUIT ||
+					(e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE)) {
 					quit = true;
 				} else if (e.type == SDL_MOUSEBUTTONDOWN) {
 					int x;
