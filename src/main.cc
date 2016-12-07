@@ -62,6 +62,8 @@ int main(int argc, char** argv) {
 		boxRed.loadFromFile("C4Red.png");
 
 		const int BOX_SIZE = boxEmpty.getWidth();
+		const int NUM_BOXES_HORIZONTAL = board.getBoxesHorizontal();
+		const int NUM_BOXES_VERTICAL = board.getBoxesVertical();
 		const int BOARD_OFFSET_WIDTH = (SCREEN_WIDTH - BOX_SIZE * NUM_BOXES_HORIZONTAL) / 2;
 		const int BOARD_OFFSET_HEIGHT = (SCREEN_HEIGHT - BOX_SIZE * NUM_BOXES_VERTICAL) / 2;
 

@@ -12,7 +12,16 @@ public:
 	CFWindow(const char* title, int width, int height);
 	~CFWindow();
 
+	/**
+	 * Create CFRenderer with hardware acceleration and vsync enabled.
+	 *
+	 * @return CFRenderer to render to.
+	 */
 	CFRenderer* createRenderer();
+
+	/**
+	 * Destroy window.
+	 */
 	void close();
 private:
 	SDL_Window* window_;

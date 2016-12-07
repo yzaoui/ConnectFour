@@ -22,4 +22,5 @@ CFRenderer* CFWindow::createRenderer() {
 
 void CFWindow::close() {
 	SDL_DestroyWindow(window_);
+	window_ = nullptr;
 }

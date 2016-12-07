@@ -14,15 +14,6 @@ CFTexture::~CFTexture() {
 	CFTexture::close();
 }
 
-void CFTexture::close() {
-	if (texture_ != nullptr) {
-		SDL_DestroyTexture(texture_);
-		texture_ = nullptr;
-		width_ = 0;
-		height_ = 0;
-	}
-}
-
 bool CFTexture::loadFromFile(std::string fileName) {
 	CFTexture::close();
 
@@ -58,7 +49,7 @@ void CFTexture::render(int x, int y, SDL_Rect* clip) {
 		renderQuad.h = clip->h;
 	}
 
-	renderer_->render(texture_, &renderQuad);
+	renderer_->render(texture_, clip, &renderQuad);
 }
 
 int CFTexture::getWidth() const {
@@ -67,4 +58,13 @@ int CFTexture::getWidth() const {
 
 int CFTexture::getHeight() const {
 	return height_;
+}
+
+void CFTexture::close() {
+	if (texture_ != nullptr) {
+		SDL_DestroyTexture(texture_);
+		texture_ = nullptr;
+		width_ = 0;
+		height_ = 0;
+	}
 }

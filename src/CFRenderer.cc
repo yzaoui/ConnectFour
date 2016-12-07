@@ -14,8 +14,8 @@ void CFRenderer::present() {
 	SDL_RenderPresent(renderer_);
 }
 
-void CFRenderer::render(SDL_Texture* texture, SDL_Rect* renderQuad) {
-	SDL_RenderCopy(renderer_, texture, nullptr, renderQuad);
+void CFRenderer::render(SDL_Texture* texture, SDL_Rect* clip, SDL_Rect* renderQuad) {
+	SDL_RenderCopy(renderer_, texture, clip, renderQuad);
 }
 
 SDL_Texture* CFRenderer::createTextureFromSurface(SDL_Surface* surface) {
@@ -24,4 +24,5 @@ SDL_Texture* CFRenderer::createTextureFromSurface(SDL_Surface* surface) {
 
 void CFRenderer::close() {
 	SDL_DestroyRenderer(renderer_);
+	renderer_ = nullptr;
 }
