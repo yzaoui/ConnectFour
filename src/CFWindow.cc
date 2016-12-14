@@ -20,6 +20,20 @@ CFRenderer* CFWindow::createRenderer() {
 	return new CFRenderer(renderer);
 }
 
+int CFWindow::getWidth() const {
+	int width;
+	SDL_GetWindowSize(window_, &width, nullptr);
+
+	return width;
+}
+
+int CFWindow::getHeight() const {
+	int height;
+	SDL_GetWindowSize(window_, nullptr, &height);
+
+	return height;
+}
+
 void CFWindow::close() {
 	SDL_DestroyWindow(window_);
 	window_ = nullptr;

@@ -20,6 +20,20 @@ public:
 	CFRenderer* createRenderer();
 
 	/**
+	 * Get the current width of the window.
+	 *
+	 * @return The current width of the window.
+	 */
+	int getWidth() const;
+
+	/**
+	 * Get the current height of the window.
+	 *
+	 * @return The height of the window.
+	 */
+	int getHeight() const;
+
+	/**
 	 * Destroy window.
 	 */
 	void close();
