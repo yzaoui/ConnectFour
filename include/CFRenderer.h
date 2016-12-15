@@ -49,6 +49,20 @@ public:
 	SDL_Texture* createTextureFromSurface(SDL_Surface* surface);
 
 	/**
+	 * Get the width of the window the renderer is in.
+	 *
+	 * @return The window width.
+	 */
+	int getWindowWidth() const;
+
+	/**
+	 * Get the height of the window the renderer is in.
+	 *
+	 * @return The window height.
+	 */
+	int getWindowHeight() const;
+
+	/**
 	 * Destroy rendering context for window, free associated textures.
 	 */
 	void close();

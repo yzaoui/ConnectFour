@@ -4,7 +4,7 @@
 
 #include "res_path.h"
 
-CFTexture::CFTexture(CFRenderer*& renderer) : renderer_(renderer) {
+CFTexture::CFTexture(CFRenderer& renderer) : renderer_(renderer) {
 	texture_ = nullptr;
 	width_ = 0;
 	height_ = 0;
@@ -25,7 +25,7 @@ bool CFTexture::loadFromFile(std::string fileName) {
 		//Log error
 	} else {
 		//Create texture from surface
-		texture_ = renderer_->createTextureFromSurface(surface);
+		texture_ = renderer_.createTextureFromSurface(surface);
 
 		if (texture_ == nullptr) {
 			//Log error
@@ -49,7 +49,7 @@ void CFTexture::render(int x, int y, SDL_Rect* clip) {
 		renderQuad.h = clip->h;
 	}
 
-	renderer_->render(texture_, clip, &renderQuad);
+	renderer_.render(texture_, clip, &renderQuad);
 }
 
 int CFTexture::getWidth() const {

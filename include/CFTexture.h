@@ -8,7 +8,7 @@
 
 class CFTexture {
 public:
-	CFTexture(CFRenderer*&);
+	CFTexture(CFRenderer&);
 	~CFTexture();
 
 	/**
@@ -51,7 +51,7 @@ public:
 	void close();
 private:
 	SDL_Texture* texture_;
-	CFRenderer*& renderer_;
+	CFRenderer& renderer_;
 	int width_;
 	int height_;
 };

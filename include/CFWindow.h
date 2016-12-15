@@ -9,7 +9,7 @@ class CFRenderer;
 
 class CFWindow {
 public:
-	CFWindow(const char* title, int width, int height);
+	CFWindow(const char* title, int width = 640, int height = 480);
 	~CFWindow();
 
 	/**

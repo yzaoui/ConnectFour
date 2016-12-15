@@ -22,6 +22,14 @@ SDL_Texture* CFRenderer::createTextureFromSurface(SDL_Surface* surface) {
 	return SDL_CreateTextureFromSurface(renderer_, surface);
 }
 
+int CFRenderer::getWindowWidth() const {
+	return window_.getWidth();
+}
+
+int CFRenderer::getWindowHeight() const {
+	return window_.getHeight();
+}
+
 void CFRenderer::close() {
 	SDL_DestroyRenderer(renderer_);
 	renderer_ = nullptr;

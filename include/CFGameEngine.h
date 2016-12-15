@@ -3,6 +3,7 @@
 
 #include <vector>
 
+#include "GameState/GameStateManager.h"
 #include "CFRenderer.h"
 #include "CFWindow.h"
 
@@ -12,11 +13,9 @@ public:
 	~CFGameEngine();
 	void run();
 private:
-	const int SCREEN_WIDTH = 640;
-	const int SCREEN_HEIGHT = 480;
-
 	CFWindow* window_;
 	CFRenderer* renderer_;
+	GameStateManager stateManager_;
 };
 
 #endif
