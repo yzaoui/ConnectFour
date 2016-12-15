@@ -1,6 +1,6 @@
 #include "CFRenderer.h"
 
-CFRenderer::CFRenderer(SDL_Renderer* renderer) : renderer_(renderer) {}
+CFRenderer::CFRenderer(SDL_Renderer* renderer, CFWindow& window) : renderer_(renderer), window_(window) {}
 
 void CFRenderer::setRenderDrawColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
 	SDL_SetRenderDrawColor(renderer_, r, g, b, a);

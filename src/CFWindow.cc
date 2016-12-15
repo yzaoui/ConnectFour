@@ -14,10 +14,10 @@ CFRenderer* CFWindow::createRenderer() {
 	SDL_Renderer* renderer = SDL_CreateRenderer(window_, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
 	if (renderer == nullptr) {
-		throw "Error: SDL_CreateRenderer";
+		//Error: SDL_CreateRenderer
 	}
 
-	return new CFRenderer(renderer);
+	return new CFRenderer(renderer, *this);
 }
 
 int CFWindow::getWidth() const {

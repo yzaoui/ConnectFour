@@ -53,8 +53,9 @@ public:
 	 */
 	void close();
 private:
-	CFRenderer(SDL_Renderer*);
+	CFRenderer(SDL_Renderer*, CFWindow&);
 	SDL_Renderer* renderer_;
+	const CFWindow & window_;
 };
 
 #endif
