@@ -51,7 +51,7 @@ public:
 	void close();
 private:
 	SDL_Texture* texture_;
-	CFRenderer& renderer_;
+	const CFRenderer& renderer_;
 	int width_;
 	int height_;
 };

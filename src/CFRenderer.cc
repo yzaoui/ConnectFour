@@ -14,11 +14,11 @@ void CFRenderer::present() {
 	SDL_RenderPresent(renderer_);
 }
 
-void CFRenderer::render(SDL_Texture* texture, SDL_Rect* clip, SDL_Rect* renderQuad) {
+void CFRenderer::render(SDL_Texture* texture, SDL_Rect* clip, SDL_Rect* renderQuad) const {
 	SDL_RenderCopy(renderer_, texture, clip, renderQuad);
 }
 
-SDL_Texture* CFRenderer::createTextureFromSurface(SDL_Surface* surface) {
+SDL_Texture* CFRenderer::createTextureFromSurface(SDL_Surface* surface) const {
 	return SDL_CreateTextureFromSurface(renderer_, surface);
 }
 
