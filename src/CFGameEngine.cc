@@ -44,7 +44,9 @@ CFGameEngine::~CFGameEngine() {
 }
 
 void CFGameEngine::run() {
-	stateManager_.pushState(StateID::BOARD, *renderer_);
+	GameStateManager stateManager(*renderer_);
+
+	stateManager.pushState(StateID::BOARD);
 
 	uint8_t frameTime;
 
@@ -55,9 +57,9 @@ void CFGameEngine::run() {
 		 * INPUT
 		 ***************/
 
-		stateManager_.handleEvents();
+		stateManager.handleEvents();
 
-		if (stateManager_.isEmpty()) {
+		if (stateManager.isEmpty()) {
 			break;
 		}
 
@@ -67,7 +69,7 @@ void CFGameEngine::run() {
 
 		renderer_->clear();
 
-		stateManager_.render();
+		stateManager.render();
 
 		renderer_->present();
 

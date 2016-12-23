@@ -15,7 +15,6 @@ public:
 private:
 	CFWindow* window_;
 	CFRenderer* renderer_;
-	GameStateManager stateManager_;
 };
 
 #endif

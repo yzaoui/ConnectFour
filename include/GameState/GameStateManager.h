@@ -8,12 +8,14 @@
 
 class GameStateManager {
 public:
+	explicit GameStateManager(CFRenderer&);
 	void handleEvents();
 	void render();
-	void pushState(StateID, CFRenderer&);
+	void pushState(StateID);
 	bool isEmpty();
 private:
 	std::vector<GameState*> states_;
+	CFRenderer& renderer_;
 };
 
 #endif

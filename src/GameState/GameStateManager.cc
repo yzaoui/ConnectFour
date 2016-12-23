@@ -2,6 +2,8 @@
 
 #include "GameState/StateBoard.h"
 
+GameStateManager::GameStateManager(CFRenderer& renderer) : renderer_(renderer) {}
+
 void GameStateManager::handleEvents() {
 	int code = states_[0]->handleEvents();
 
@@ -19,10 +21,11 @@ void GameStateManager::render() {
 	}
 }
 
-void GameStateManager::pushState(StateID id, CFRenderer& renderer) {
+void GameStateManager::pushState(StateID id) {
 	switch(id) {
 		case StateID::BOARD:
-			states_.push_back(new StateBoard(renderer));
+			states_.push_back(new StateBoard(renderer_));
+			break;
 	}
 }
 
