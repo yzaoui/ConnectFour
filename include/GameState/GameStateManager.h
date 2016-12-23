@@ -6,11 +6,15 @@
 #include "GameState/GameState.h"
 #include "CFRenderer.h"
 
+class GameState;
+enum class StateID;
+
 class GameStateManager {
 public:
 	explicit GameStateManager(CFRenderer&);
 	void handleEvents();
 	void render();
+	void changeState(StateID);
 	void pushState(StateID);
 	bool isEmpty();
 private:

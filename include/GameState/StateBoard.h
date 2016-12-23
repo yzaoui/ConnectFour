@@ -8,7 +8,7 @@
 
 class StateBoard : public GameState {
 public:
-	StateBoard(CFRenderer&);
+	StateBoard(GameStateManager&, CFRenderer&);
 	int handleEvents();
 	void update();
 	void render();

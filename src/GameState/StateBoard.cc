@@ -4,8 +4,9 @@
 #include "SDL_mouse.h"
 #include "SDL_keyboard.h"
 
-StateBoard::StateBoard(CFRenderer& renderer) :
-	GameState(renderer), boxEmpty_(renderer), boxYellow_(renderer), boxRed_(renderer) {
+StateBoard::StateBoard(GameStateManager& stateManager, CFRenderer& renderer) :
+	GameState(stateManager, renderer), boxEmpty_(renderer),
+	boxYellow_(renderer), boxRed_(renderer) {
 	boxEmpty_.loadFromFile("C4Empty.png");
 	boxYellow_.loadFromFile("C4Yellow.png");
 	boxRed_.loadFromFile("C4Red.png");
