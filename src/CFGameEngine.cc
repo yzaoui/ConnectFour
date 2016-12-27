@@ -48,7 +48,7 @@ void CFGameEngine::run() {
 
 	stateManager.pushState(StateID::TITLE);
 
-	uint8_t frameTime;
+	uint8_t frameTime; //Platform-dependant, uint8_t may not exist
 
 	while (true) {
 		frameTime = SDL_GetTicks();
