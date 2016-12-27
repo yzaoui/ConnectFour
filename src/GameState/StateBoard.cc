@@ -18,13 +18,13 @@ StateBoard::StateBoard(GameStateManager& stateManager, CFRenderer& renderer) :
 	BOARD_OFFSET_HEIGHT = (renderer_.getWindowHeight() - BOX_SIZE * NUM_BOXES_VERTICAL) / 2;
 }
 
-int StateBoard::handleEvents() {
+void StateBoard::handleEvents() {
 	SDL_Event e;
 
 	while (SDL_PollEvent(&e) != 0) {
 		if (e.type == SDL_QUIT ||
 			(e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE)) {
-			return 0;
+			stateManager_.changeState(StateID::TITLE);
 		} else if (e.type == SDL_MOUSEBUTTONDOWN) {
 			int x;
 			SDL_GetMouseState(&x, nullptr);
@@ -34,8 +34,6 @@ int StateBoard::handleEvents() {
 			}
 		}
 	}
-
-	return 1;
 }
 
 void StateBoard::update() {

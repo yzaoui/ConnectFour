@@ -9,7 +9,7 @@
 class StateBoard : public GameState {
 public:
 	StateBoard(GameStateManager&, CFRenderer&);
-	int handleEvents();
+	void handleEvents();
 	void update();
 	void render();
 private:

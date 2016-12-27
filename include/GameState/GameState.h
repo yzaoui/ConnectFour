@@ -11,7 +11,7 @@ enum class StateID {TITLE, BOARD};
 class GameState {
 public:
 	virtual ~GameState();
-	virtual int handleEvents() = 0;
+	virtual void handleEvents() = 0;
 	virtual void update() = 0;
 	virtual void render() = 0;
 protected:

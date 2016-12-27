@@ -6,12 +6,7 @@
 GameStateManager::GameStateManager(CFRenderer& renderer) : renderer_(renderer) {}
 
 void GameStateManager::handleEvents() {
-	int code = states_[0]->handleEvents();
-
-	if (code == 0) {
-		delete states_[0];
-		states_.pop_back();
-	}
+	states_.back()->handleEvents();
 }
 
 void GameStateManager::render() {
