@@ -46,7 +46,7 @@ CFGameEngine::~CFGameEngine() {
 void CFGameEngine::run() {
 	GameStateManager stateManager(*renderer_);
 
-	stateManager.pushState(StateID::BOARD);
+	stateManager.pushState(StateID::TITLE);
 
 	uint8_t frameTime;
 
