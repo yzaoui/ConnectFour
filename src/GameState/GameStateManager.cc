@@ -35,6 +35,13 @@ void GameStateManager::changeState(StateID id) {
 	GameStateManager::pushState(id);
 }
 
+void GameStateManager::emptyStates() {
+	for (auto i = states_.begin(); i != states_.end(); i++) {
+		delete *i;
+	}
+	states_.clear();
+}
+
 bool GameStateManager::isEmpty() {
 	return states_.empty();
 }

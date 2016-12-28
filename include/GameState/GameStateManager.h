@@ -16,6 +16,7 @@ public:
 	void render();
 	void changeState(StateID);
 	void pushState(StateID);
+	void emptyStates();
 	bool isEmpty();
 private:
 	std::vector<GameState*> states_;
