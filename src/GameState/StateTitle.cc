@@ -6,7 +6,7 @@
 
 StateTitle::StateTitle(GameStateManager& stateManager, CFRenderer& renderer) :
 	GameState(stateManager, renderer), title_(renderer) {
-		title_.loadFromFile("fields.png");
+		title_.loadFromFile("title.png");
 	}
 
 void StateTitle::handleEvents() {
