@@ -17,21 +17,23 @@ public:
 	 * Load texture from file, assuming the working directory
 	 * is "bin/" and resources are in "../res/".
 	 *
-	 * @param  fileName The name of the image file, including extension if necessary.
+	 * @param  imageFileName The name of the image file.
 	 *
 	 * @return          Whether the texture was successfully loaded.
 	 */
-	bool loadFromFile(std::string fileName);
+	bool loadFromFile(std::string imageFileName);
 
 	/**
 	 * Load texture from text.
 	 *
-	 * @param  textureText The text to load.
-	 * @param  textColor   The color of the text to load.
+	 * @param  fontFileName The name of the font file.
+	 * @param  text         The text to load.
+	 * @param  textColor    The color of the text to load.
+	 * @param  pointSize    The font size.
 	 *
-	 * @return             Whether the texture was successfully loaded.
+	 * @return              Whether the texture was successfully loaded or not.
 	 */
-	bool loadFromRenderedText(std::string textureText, SDL_Color textColor);
+	bool loadFromRenderedText(std::string fontFileName, std::string text, SDL_Color textColor, int pointSize);
 
 	/**
 	 * Render the current texture at a given position, or optionally passing

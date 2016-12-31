@@ -29,7 +29,12 @@ CFGameEngine::CFGameEngine() : window_(nullptr), renderer_(nullptr) {
 	/* Initialize PNG loading */
 	const int imgFlags = IMG_INIT_PNG;
 	if (!(IMG_Init(imgFlags) & imgFlags)) {
-		//Log error
+		//Log error: IMG_Init
+	}
+
+	/* Initialize SDL_ttf */
+	if (TTF_Init() == -1) {
+		//Log error: TTF_Init
 	}
 }
 
