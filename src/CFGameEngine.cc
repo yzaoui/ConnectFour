@@ -1,9 +1,9 @@
 #include "CFGameEngine.h"
 
 #include <iostream>
-
-#include "SDL.h"
-#include "SDL_image.h"
+#include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_ttf.h>
 
 #include "GameState/GameState.h"
 #include "CFRenderer.h"

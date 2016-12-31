@@ -1,8 +1,8 @@
 #include "GameState/StateBoard.h"
 
-#include "SDL_events.h"
-#include "SDL_mouse.h"
-#include "SDL_keyboard.h"
+#include <SDL_events.h>
+#include <SDL_mouse.h>
+#include <SDL_keyboard.h>
 
 StateBoard::StateBoard(GameStateManager& stateManager, CFRenderer& renderer) :
 	GameState(stateManager, renderer), boxEmpty_(renderer),

@@ -1,8 +1,8 @@
 #include "GameState/StateTitle.h"
 
-#include "SDL_events.h"
-#include "SDL_mouse.h"
-#include "SDL_keyboard.h"
+#include <SDL_events.h>
+#include <SDL_mouse.h>
+#include <SDL_keyboard.h>
 
 StateTitle::StateTitle(GameStateManager& stateManager, CFRenderer& renderer) :
 	GameState(stateManager, renderer), title_(renderer) {
