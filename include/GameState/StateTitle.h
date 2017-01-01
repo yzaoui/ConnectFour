@@ -13,6 +13,7 @@ public:
 	void render();
 private:
 	CFTexture title_;
+	CFTexture background_;
 };
 
 #endif
