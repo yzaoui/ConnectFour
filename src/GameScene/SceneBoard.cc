@@ -22,15 +22,16 @@ void SceneBoard::handleEvents() {
 	SDL_Event e;
 
 	while (SDL_PollEvent(&e) != 0) {
-		if (e.type == SDL_QUIT ||
-			(e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE)) {
+		if (e.type == SDL_QUIT) {
+			sceneManager_.emptyScenes();
+		} else if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE) {
 			sceneManager_.changeScene(SceneID::TITLE);
 		} else if (e.type == SDL_MOUSEBUTTONDOWN) {
-			int x;
-			SDL_GetMouseState(&x, nullptr);
+			int mouseX;
+			SDL_GetMouseState(&mouseX, nullptr);
 
-			if (x > BOARD_OFFSET_WIDTH && x < renderer_.getWindowWidth() - BOARD_OFFSET_WIDTH) {
-				board_.play((x - BOARD_OFFSET_WIDTH) / BOX_SIZE);
+			if (mouseX > BOARD_OFFSET_WIDTH && mouseX < renderer_.getWindowWidth() - BOARD_OFFSET_WIDTH) {
+				board_.play((mouseX - BOARD_OFFSET_WIDTH) / BOX_SIZE);
 			}
 		}
 	}
