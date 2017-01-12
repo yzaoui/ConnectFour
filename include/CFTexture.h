@@ -1,25 +1,39 @@
 #ifndef _CFTEXTURE_H
 #define _CFTEXTURE_H
 
+#include <SDL_pixels.h>
 #include <SDL_render.h>
+#include <SDL_surface.h>
 #include <string>
 
 #include "CFRenderer.h"
 
 class CFTexture {
 public:
-	CFTexture(CFRenderer*&);
+	CFTexture(CFRenderer&);
 	~CFTexture();
 
 	/**
 	 * Load texture from file, assuming the working directory
 	 * is "bin/" and resources are in "../res/".
 	 *
-	 * @param  fileName The name of the image file, including extension if necessary.
+	 * @param  imageFileName The name of the image file.
 	 *
 	 * @return          Whether the texture was successfully loaded.
 	 */
-	bool loadFromFile(std::string fileName);
+	bool loadFromFile(std::string imageFileName);
+
+	/**
+	 * Load texture from text.
+	 *
+	 * @param  fontFileName The name of the font file.
+	 * @param  text         The text to load.
+	 * @param  textColor    The color of the text to load.
+	 * @param  pointSize    The font size.
+	 *
+	 * @return              Whether the texture was successfully loaded or not.
+	 */
+	bool loadFromRenderedText(std::string fontFileName, std::string text, SDL_Color textColor, int pointSize);
 
 	/**
 	 * Render the current texture at a given position, or optionally passing
@@ -45,13 +59,16 @@ public:
 	 */
 	int getHeight() const;
 
+private:
+	void load(SDL_Surface* surface);
+
 	/**
 	 * Destroy texture.
 	 */
 	void close();
-private:
+
 	SDL_Texture* texture_;
-	CFRenderer*& renderer_;
+	const CFRenderer& renderer_;
 	int width_;
 	int height_;
 };

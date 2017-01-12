@@ -37,7 +37,7 @@ public:
 	 * @param renderQuad The source rectangle.
 	 * @param renderQuad The destination rectangle.
 	 */
-	void render(SDL_Texture* texture, SDL_Rect* clip, SDL_Rect* renderQuad);
+	void render(SDL_Texture* texture, SDL_Rect* clip, SDL_Rect* renderQuad) const;
 
 	/**
 	 * Create a texture from an existing surface.
@@ -46,15 +46,30 @@ public:
 	 *
 	 * @return         The created texture is returned.
 	 */
-	SDL_Texture* createTextureFromSurface(SDL_Surface* surface);
+	SDL_Texture* createTextureFromSurface(SDL_Surface* surface) const;
+
+	/**
+	 * Get the width of the window the renderer is in.
+	 *
+	 * @return The window width.
+	 */
+	int getWindowWidth() const;
+
+	/**
+	 * Get the height of the window the renderer is in.
+	 *
+	 * @return The window height.
+	 */
+	int getWindowHeight() const;
 
 	/**
 	 * Destroy rendering context for window, free associated textures.
 	 */
 	void close();
 private:
-	CFRenderer(SDL_Renderer*);
+	CFRenderer(SDL_Renderer*, CFWindow&);
 	SDL_Renderer* renderer_;
+	const CFWindow & window_;
 };
 
 #endif

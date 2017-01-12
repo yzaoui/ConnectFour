@@ -1,12 +1,14 @@
 #include "CFGameEngine.h"
 
 #include <iostream>
+#include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_ttf.h>
 
+#include "GameScene/GameScene.h"
 #include "CFRenderer.h"
 #include "CFTexture.h"
 #include "GameBoard.h"
-#include "SDL.h"
-#include "SDL_image.h"
 
 CFGameEngine::CFGameEngine() : window_(nullptr), renderer_(nullptr) {
 	/* Initialize SDL */
@@ -19,7 +21,7 @@ CFGameEngine::CFGameEngine() : window_(nullptr), renderer_(nullptr) {
 		//Warning: SDL_SetHint
 	}
 
-	window_ = new CFWindow("Connect Four", SCREEN_WIDTH, SCREEN_HEIGHT);
+	window_ = new CFWindow("Connect Four");
 
 	renderer_ = window_->createRenderer();
 	renderer_->setRenderDrawColor(0xFF, 0xFF, 0xFF, 0xFF);
@@ -27,7 +29,12 @@ CFGameEngine::CFGameEngine() : window_(nullptr), renderer_(nullptr) {
 	/* Initialize PNG loading */
 	const int imgFlags = IMG_INIT_PNG;
 	if (!(IMG_Init(imgFlags) & imgFlags)) {
-		//Log error
+		//Log error: IMG_Init
+	}
+
+	/* Initialize SDL_ttf */
+	if (TTF_Init() == -1) {
+		//Log error: TTF_Init
 	}
 }
 
@@ -42,45 +49,23 @@ CFGameEngine::~CFGameEngine() {
 }
 
 void CFGameEngine::run() {
-	bool quit = false;
-	SDL_Event e;
+	GameSceneManager sceneManager(*renderer_);
 
-	GameBoard board;
+	sceneManager.pushScene(SceneID::TITLE);
 
-	CFTexture boxEmpty(renderer_);
-	boxEmpty.loadFromFile("C4Empty.png");
-	CFTexture boxYellow(renderer_);
-	boxYellow.loadFromFile("C4Yellow.png");
-	CFTexture boxRed(renderer_);
-	boxRed.loadFromFile("C4Red.png");
+	uint8_t frameTime; //Platform-dependant, uint8_t may not exist
 
-	const int BOX_SIZE = boxEmpty.getWidth();
-	const int NUM_BOXES_HORIZONTAL = board.getBoxesHorizontal();
-	const int NUM_BOXES_VERTICAL = board.getBoxesVertical();
-	const int BOARD_OFFSET_WIDTH = (SCREEN_WIDTH - BOX_SIZE * NUM_BOXES_HORIZONTAL) / 2;
-	const int BOARD_OFFSET_HEIGHT = (SCREEN_HEIGHT - BOX_SIZE * NUM_BOXES_VERTICAL) / 2;
-
-	uint8_t frameTime;
-
-	while (!quit) {
+	while (true) {
 		frameTime = SDL_GetTicks();
 
 		/***************
 		 * INPUT
 		 ***************/
 
-		while (SDL_PollEvent(&e) != 0) {
-			if (e.type == SDL_QUIT ||
-				(e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE)) {
-				quit = true;
-			} else if (e.type == SDL_MOUSEBUTTONDOWN) {
-				int x;
-				SDL_GetMouseState(&x, nullptr);
+		sceneManager.handleEvents();
 
-				if (x > BOARD_OFFSET_WIDTH && x < SCREEN_WIDTH - BOARD_OFFSET_WIDTH) {
-					board.play((x - BOARD_OFFSET_WIDTH) / BOX_SIZE);
-				}
-			}
+		if (sceneManager.isEmpty()) {
+			break;
 		}
 
 		/***************
@@ -89,21 +74,7 @@ void CFGameEngine::run() {
 
 		renderer_->clear();
 
-		for (int x = 0; x < NUM_BOXES_HORIZONTAL; x++) {
-			for (int y = 0; y < NUM_BOXES_VERTICAL; y++) {
-				switch (board.getBox(x, y)) {
-					case Box::empty:
-						boxEmpty.render(BOARD_OFFSET_WIDTH + x * BOX_SIZE, BOARD_OFFSET_HEIGHT + y * BOX_SIZE);
-						break;
-					case Box::yellow:
-						boxYellow.render(BOARD_OFFSET_WIDTH + x * BOX_SIZE, BOARD_OFFSET_HEIGHT + y * BOX_SIZE);
-						break;
-					case Box::red:
-						boxRed.render(BOARD_OFFSET_WIDTH + x * BOX_SIZE, BOARD_OFFSET_HEIGHT + y * BOX_SIZE);
-						break;
-				}
-			}
-		}
+		sceneManager.render();
 
 		renderer_->present();
 
@@ -111,7 +82,7 @@ void CFGameEngine::run() {
 		 * TIMING
 		 ***************/
 
-		int ticks = SDL_GetTicks() - frameTime;
+		uint8_t ticks = SDL_GetTicks() - frameTime;
 
 		if (ticks < 1000.0 / 60.0) {
 			SDL_Delay(1000.0 / 60.0 - ticks);

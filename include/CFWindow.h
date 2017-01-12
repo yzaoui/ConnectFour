@@ -9,7 +9,7 @@ class CFRenderer;
 
 class CFWindow {
 public:
-	CFWindow(const char* title, int width, int height);
+	CFWindow(const char* title, int width = 640, int height = 480);
 	~CFWindow();
 
 	/**
@@ -18,6 +18,20 @@ public:
 	 * @return CFRenderer to render to.
 	 */
 	CFRenderer* createRenderer();
+
+	/**
+	 * Get the current width of the window.
+	 *
+	 * @return The current width of the window.
+	 */
+	int getWidth() const;
+
+	/**
+	 * Get the current height of the window.
+	 *
+	 * @return The height of the window.
+	 */
+	int getHeight() const;
 
 	/**
 	 * Destroy window.
