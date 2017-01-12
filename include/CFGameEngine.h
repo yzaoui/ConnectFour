@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "GameState/GameStateManager.h"
+#include "GameScene/GameSceneManager.h"
 #include "CFRenderer.h"
 #include "CFWindow.h"
 

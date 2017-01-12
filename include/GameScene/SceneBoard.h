@@ -1,14 +1,14 @@
-#ifndef _GAMESTATE_STATEBOARD_H
-#define _GAMESTATE_STATEBOARD_H
+#ifndef _GAMESCENE_SCENEBOARD_H
+#define _GAMESCENE_SCENEBOARD_H
 
-#include "GameState/GameState.h"
+#include "GameScene/GameScene.h"
 #include "CFRenderer.h"
 #include "CFTexture.h"
 #include "GameBoard.h"
 
-class StateBoard : public GameState {
+class SceneBoard : public GameScene {
 public:
-	StateBoard(GameStateManager&, CFRenderer&);
+	SceneBoard(GameSceneManager&, CFRenderer&);
 	void handleEvents();
 	void update();
 	void render();

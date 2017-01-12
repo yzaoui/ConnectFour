@@ -1,32 +1,32 @@
-#include "GameState/StateTitle.h"
+#include "GameScene/SceneTitle.h"
 
 #include <SDL_events.h>
 #include <SDL_keyboard.h>
 #include <SDL_mouse.h>
 #include <SDL_rect.h>
 
-StateTitle::StateTitle(GameStateManager& stateManager, CFRenderer& renderer) :
-	GameState(stateManager, renderer), title_(renderer), background_(renderer) {
+SceneTitle::SceneTitle(GameSceneManager& sceneManager, CFRenderer& renderer) :
+	GameScene(sceneManager, renderer), title_(renderer), background_(renderer) {
 		background_.loadFromFile("C4Background.png");
 		title_.loadFromFile("C4Connect4.png");
 	}
 
-void StateTitle::handleEvents() {
+void SceneTitle::handleEvents() {
 	SDL_Event e;
 
 	while (SDL_PollEvent(&e) != 0) {
 		if (e.type == SDL_MOUSEBUTTONDOWN) {
-			stateManager_.changeState(StateID::BOARD);
+			sceneManager_.changeScene(SceneID::BOARD);
 		} else if (e.type == SDL_QUIT ||
 			(e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE)) {
-			stateManager_.emptyStates();
+			sceneManager_.emptyScenes();
 		}
 	}
 }
 
-void StateTitle::update() {}
+void SceneTitle::update() {}
 
-void StateTitle::render() {
+void SceneTitle::render() {
 	/*************************
 	 * RENDER BACKGROUND
 	 ************************/

@@ -5,7 +5,7 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 
-#include "GameState/GameState.h"
+#include "GameScene/GameScene.h"
 #include "CFRenderer.h"
 #include "CFTexture.h"
 #include "GameBoard.h"
@@ -49,9 +49,9 @@ CFGameEngine::~CFGameEngine() {
 }
 
 void CFGameEngine::run() {
-	GameStateManager stateManager(*renderer_);
+	GameSceneManager sceneManager(*renderer_);
 
-	stateManager.pushState(StateID::TITLE);
+	sceneManager.pushScene(SceneID::TITLE);
 
 	uint8_t frameTime; //Platform-dependant, uint8_t may not exist
 
@@ -62,9 +62,9 @@ void CFGameEngine::run() {
 		 * INPUT
 		 ***************/
 
-		stateManager.handleEvents();
+		sceneManager.handleEvents();
 
-		if (stateManager.isEmpty()) {
+		if (sceneManager.isEmpty()) {
 			break;
 		}
 
@@ -74,7 +74,7 @@ void CFGameEngine::run() {
 
 		renderer_->clear();
 
-		stateManager.render();
+		sceneManager.render();
 
 		renderer_->present();
 
