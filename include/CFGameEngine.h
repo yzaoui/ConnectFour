@@ -6,6 +6,7 @@
 #include "GameScene/GameSceneManager.h"
 #include "CFRenderer.h"
 #include "CFWindow.h"
+#include "ResourceManager.h"
 
 class CFGameEngine {
 public:
@@ -15,6 +16,7 @@ public:
 private:
 	CFWindow* window_;
 	CFRenderer* renderer_;
+	ResourceManager* resManager_;
 };
 
 #endif

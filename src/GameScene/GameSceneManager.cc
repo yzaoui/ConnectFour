@@ -3,7 +3,8 @@
 #include "GameScene/SceneBoard.h"
 #include "GameScene/SceneTitle.h"
 
-GameSceneManager::GameSceneManager(CFRenderer& renderer) : renderer_(renderer) {}
+GameSceneManager::GameSceneManager(CFRenderer& renderer, ResourceManager& resManager) :
+	renderer_(renderer), resManager_(resManager) {}
 
 void GameSceneManager::handleEvents() {
 	scenes_.back()->handleEvents();
@@ -20,10 +21,10 @@ void GameSceneManager::render() {
 void GameSceneManager::pushScene(SceneID id) {
 	switch(id) {
 		case SceneID::TITLE:
-			scenes_.push_back(new SceneTitle(*this, renderer_));
+			scenes_.push_back(new SceneTitle(renderer_, *this, resManager_));
 			break;
 		case SceneID::BOARD:
-			scenes_.push_back(new SceneBoard(*this, renderer_));
+			scenes_.push_back(new SceneBoard(renderer_, *this, resManager_));
 			break;
 	}
 }

@@ -5,8 +5,8 @@
 #include <SDL_mouse.h>
 #include <SDL_rect.h>
 
-SceneTitle::SceneTitle(GameSceneManager& sceneManager, CFRenderer& renderer) :
-	GameScene(sceneManager, renderer), title_(renderer), background_(renderer) {
+SceneTitle::SceneTitle(CFRenderer& renderer, GameSceneManager& sceneManager, ResourceManager& resManager) :
+	GameScene(renderer, sceneManager, resManager), title_(renderer), background_(renderer) {
 		background_.loadFromFile("C4Background.png");
 		title_.loadFromFile("C4Connect4.png");
 	}

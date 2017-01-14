@@ -4,10 +4,11 @@
 #include "GameScene/GameScene.h"
 #include "CFRenderer.h"
 #include "CFTexture.h"
+#include "ResourceManager.h"
 
 class SceneTitle : public GameScene {
 public:
-	SceneTitle(GameSceneManager&, CFRenderer&);
+	SceneTitle(CFRenderer&, GameSceneManager&, ResourceManager&);
 	void handleEvents();
 	void update();
 	void render();

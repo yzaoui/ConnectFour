@@ -69,7 +69,7 @@ public:
 private:
 	CFRenderer(SDL_Renderer*, CFWindow&);
 	SDL_Renderer* renderer_;
-	const CFWindow & window_;
+	const CFWindow& window_;
 };
 
 #endif

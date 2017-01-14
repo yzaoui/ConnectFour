@@ -10,7 +10,7 @@
 
 class CFTexture {
 public:
-	CFTexture(CFRenderer&);
+	CFTexture(const CFRenderer&);
 	~CFTexture();
 
 	/**
