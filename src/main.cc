@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "CFGameEngine.h"
 
 int main(int argc, char** argv) {

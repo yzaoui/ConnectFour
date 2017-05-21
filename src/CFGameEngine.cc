@@ -53,7 +53,7 @@ void CFGameEngine::run() {
 
 	sceneManager.pushScene(SceneID::TITLE);
 
-	uint8_t frameTime; //Platform-dependant, uint8_t may not exist
+	Uint32 frameTime; //Platform-dependant, uint8_t may not exist
 
 	while (true) {
 		frameTime = SDL_GetTicks();
@@ -82,10 +82,10 @@ void CFGameEngine::run() {
 		 * TIMING
 		 ***************/
 
-		uint8_t ticks = SDL_GetTicks() - frameTime;
+		Uint32 ticks = SDL_GetTicks() - frameTime;
 
 		if (ticks < 1000.0 / 60.0) {
-			SDL_Delay(1000.0 / 60.0 - ticks);
+			SDL_Delay((Uint32) (1000.0 / 60.0 - ticks));
 		}
 	}
 }

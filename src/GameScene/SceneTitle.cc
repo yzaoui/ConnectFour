@@ -55,5 +55,5 @@ void SceneTitle::render() {
 	/*************************
 	 * RENDER TITLE
 	 ************************/
-	title_.render((windowW - title_.getWidth()) * (0.5), (windowH - title_.getHeight()) * (0.25));
+	title_.render((int) ((windowW - title_.getWidth()) * (0.5)), (int) ((windowH - title_.getHeight()) * (0.25)));
 }

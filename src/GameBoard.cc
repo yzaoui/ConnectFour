@@ -11,7 +11,7 @@ GameBoard::GameBoard(int boxesHorizontal, int boxesVertical, int boxesToWin) :
 }
 
 void GameBoard::reset() {
-	boxes_.resize(boxesHorizontal_, std::vector<Box>(boxesVertical_));
+	boxes_.resize((unsigned long long int) boxesHorizontal_, std::vector<Box>((unsigned long long int) boxesVertical_));
 
 	for (int i = 0; i < boxesHorizontal_; i++) {
 		for (int j = 0; j < boxesVertical_; j++) {
@@ -137,11 +137,7 @@ bool GameBoard::consecutiveBoxWin(int x, int y, int& consecutiveBoxes) const {
 		consecutiveBoxes = 0;
 	}
 
-	if (consecutiveBoxes == boxesToWin_) {
-		return true;
-	}
-
-	return false;
+	return consecutiveBoxes == boxesToWin_;
 }
 
 void GameBoard::nextPlayer() {
