@@ -2,3 +2,5 @@ build
 bin/*
 *.sublime-project
 *.sublime-workspace
+.idea
+cmake-build-debug
