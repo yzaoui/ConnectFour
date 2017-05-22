@@ -10,16 +10,16 @@ ResourceManager::~ResourceManager() {
 	resources_.clear();
 }
 
-CFTexture* ResourceManager::load(std::string resName, std::string fileName) {
+CFTexture* ResourceManager::load(std::string fileName) {
 	//If the resource is already loaded, return it.
 	//Otherwise, load the resource and return it.
-	if (resources_.find(resName) != resources_.end()) {
-		return resources_.at(resName);
+	if (resources_.find(fileName) != resources_.end()) {
+		return resources_.at(fileName);
 	} else {
 		CFTexture* texture = new CFTexture(renderer_);
 		texture->loadFromFile(fileName);
 
-		resources_.insert({resName, texture});
+		resources_.insert({fileName, texture});
 
 		return texture;
 	}

@@ -11,7 +11,7 @@ class ResourceManager {
 public:
 	ResourceManager(CFRenderer&);
 	~ResourceManager();
-	CFTexture* load(std::string resName, std::string fileName);
+	CFTexture* load(std::string fileName);
 private:
 	const CFRenderer& renderer_;
 	std::unordered_map<std::string, CFTexture*> resources_;
