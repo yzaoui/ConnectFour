@@ -8,6 +8,7 @@
 SceneTitle::SceneTitle(GameSceneManager& sceneManager, CFRenderer& renderer) :
 	GameScene(sceneManager, renderer), title_(renderer), background_(renderer) {
 		background_.loadFromFile("C4Background.png");
+		background_.setScale(4);
 		title_.loadFromFile("C4Connect4.png");
 	}
 
@@ -35,10 +36,11 @@ void SceneTitle::render() {
 	static const int tileW = background_.getWidth();
 	static const int tileH = background_.getHeight();
 
-	//The number of tiles is the amount of tiles that can fit horizontally and vertically,
-	//while adding an extra row and column to make room for the scrolling animation.
-	const int numTilesX = (windowW / tileW) + 1;
-	const int numTilesY = (windowH / tileH) + 1;
+	// The number of tiles is the amount of tiles that can fit horizontally and vertically,
+	// while adding an extra row and column to make room for the scrolling animation.
+	// The ratio should be rounded up to the nearest integer.
+	const int numTilesX = ((windowW % tileW) ? windowW / tileW + 1 : windowW / tileW) + 1;
+	const int numTilesY = ((windowH % tileH) ? windowH / tileH + 1 : windowH / tileH) + 1;
 
 	static int frameCount = 0;
 

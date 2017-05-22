@@ -17,7 +17,7 @@ CFGameEngine::CFGameEngine() : window_(nullptr), renderer_(nullptr) {
 	}
 
 	/* Linear Texture Filtering */
-	if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1")) {
+	if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0")) {
 		//Warning: SDL_SetHint
 	}
 

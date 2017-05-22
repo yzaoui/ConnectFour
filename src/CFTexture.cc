@@ -5,11 +5,7 @@
 
 #include "res_path.h"
 
-CFTexture::CFTexture(CFRenderer& renderer) : renderer_(renderer) {
-	texture_ = nullptr;
-	width_ = 0;
-	height_ = 0;
-}
+CFTexture::CFTexture(CFRenderer& renderer) : renderer_(renderer), texture_(nullptr), width_(0), height_(0), scale_(1) {}
 
 CFTexture::~CFTexture() {
 	CFTexture::close();
@@ -80,7 +76,7 @@ bool CFTexture::loadFromRenderedText(std::string fontFileName, std::string text,
 }
 
 void CFTexture::render(int x, int y, SDL_Rect* clip) {
-	SDL_Rect renderQuad = {x, y, width_, height_};
+	SDL_Rect renderQuad = {x, y, this->getWidth(), this->getHeight()};
 
 	if (clip != nullptr) {
 		renderQuad.w = clip->w;
@@ -90,10 +86,18 @@ void CFTexture::render(int x, int y, SDL_Rect* clip) {
 	renderer_.render(texture_, clip, &renderQuad);
 }
 
+void CFTexture::setScale(double scale) {
+	if (scale == 0) {
+		//TODO: error
+	} else {
+		scale_ = scale;
+	}
+}
+
 int CFTexture::getWidth() const {
-	return width_;
+	return (int) (width_ * scale_);
 }
 
 int CFTexture::getHeight() const {
-	return height_;
+	return (int) (height_ * scale_);
 }

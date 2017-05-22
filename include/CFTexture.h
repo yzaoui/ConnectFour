@@ -46,6 +46,13 @@ public:
 	void render(int x, int y, SDL_Rect* clip = nullptr);
 
 	/**
+	 * Scale the underlying texture.
+	 *
+	 * @param scale The scale to stretch the texture's width and height.
+	 */
+	void setScale(double scale);
+
+	/**
 	 * Get the width of the texture.
 	 *
 	 * @return The texture's width.
@@ -67,10 +74,11 @@ private:
 	 */
 	void close();
 
-	SDL_Texture* texture_;
 	const CFRenderer& renderer_;
+	SDL_Texture* texture_;
 	int width_;
 	int height_;
+	double scale_;
 };
 
 #endif
