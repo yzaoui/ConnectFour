@@ -5,7 +5,7 @@
 
 #include "res_path.h"
 
-CFTexture::CFTexture(CFRenderer& renderer) : renderer_(renderer), texture_(nullptr), width_(0), height_(0), scale_(1) {}
+CFTexture::CFTexture(const CFRenderer& renderer) : renderer_(renderer), texture_(nullptr), width_(0), height_(0), scale_(1) {}
 
 CFTexture::~CFTexture() {
 	CFTexture::close();

@@ -5,10 +5,11 @@
 #include "CFRenderer.h"
 #include "CFTexture.h"
 #include "GameBoard.h"
+#include "ResourceManager.h"
 
 class SceneBoard : public GameScene {
 public:
-	SceneBoard(GameSceneManager&, CFRenderer&);
+	SceneBoard(CFRenderer&, GameSceneManager&, ResourceManager&);
 	void handleEvents();
 	void update();
 	void render();

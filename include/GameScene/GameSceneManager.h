@@ -5,13 +5,14 @@
 
 #include "GameScene/GameScene.h"
 #include "CFRenderer.h"
+#include "ResourceManager.h"
 
 class GameScene;
 enum class SceneID;
 
 class GameSceneManager {
 public:
-	explicit GameSceneManager(CFRenderer&);
+	explicit GameSceneManager(CFRenderer&, ResourceManager&);
 	void handleEvents();
 	void render();
 	void changeScene(SceneID);
@@ -21,6 +22,7 @@ public:
 private:
 	std::vector<GameScene*> scenes_;
 	CFRenderer& renderer_;
+	ResourceManager resManager_;
 };
 
 #endif

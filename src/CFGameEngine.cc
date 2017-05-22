@@ -10,7 +10,7 @@
 #include "CFTexture.h"
 #include "GameBoard.h"
 
-CFGameEngine::CFGameEngine() : window_(nullptr), renderer_(nullptr) {
+CFGameEngine::CFGameEngine() : window_(nullptr), renderer_(nullptr), resManager_(nullptr) {
 	/* Initialize SDL */
 	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
 		//Error: SDL_Init
@@ -36,9 +36,15 @@ CFGameEngine::CFGameEngine() : window_(nullptr), renderer_(nullptr) {
 	if (TTF_Init() == -1) {
 		//Log error: TTF_Init
 	}
+
+	resManager_ = new ResourceManager(*renderer_);
 }
 
 CFGameEngine::~CFGameEngine() {
+	delete resManager_;
+	resManager_ = nullptr;
+
+	//TODO: RAII
 	renderer_->close();
 	renderer_ = nullptr;
 
@@ -49,7 +55,7 @@ CFGameEngine::~CFGameEngine() {
 }
 
 void CFGameEngine::run() {
-	GameSceneManager sceneManager(*renderer_);
+	GameSceneManager sceneManager(*renderer_, *resManager_);
 
 	sceneManager.pushScene(SceneID::TITLE);
 

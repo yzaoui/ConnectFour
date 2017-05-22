@@ -5,11 +5,13 @@
 #include <SDL_mouse.h>
 #include <SDL_rect.h>
 
-SceneTitle::SceneTitle(GameSceneManager& sceneManager, CFRenderer& renderer) :
-	GameScene(sceneManager, renderer), title_(renderer), background_(renderer) {
+SceneTitle::SceneTitle(CFRenderer& renderer, GameSceneManager& sceneManager, ResourceManager& resManager) :
+	GameScene(renderer, sceneManager, resManager), title_(renderer), background_(renderer), start_(nullptr), quit_(nullptr) {
 		background_.loadFromFile("C4Background.png");
 		background_.setScale(4);
 		title_.loadFromFile("C4Connect4.png");
+        start_ = Button(resManager.load("MenuButton.png"));
+        quit_ = Button(resManager.load("MenuButtonDefault.png"));
 	}
 
 void SceneTitle::handleEvents() {
@@ -58,4 +60,10 @@ void SceneTitle::render() {
 	 * RENDER TITLE
 	 ************************/
 	title_.render((int) ((windowW - title_.getWidth()) * (0.5)), (int) ((windowH - title_.getHeight()) * (0.25)));
+
+	/*************************
+	 * RENDER BUTTONS
+	 ************************/
+	start_.setXY((windowW - start_.getWidth()) / 2, (windowH - start_.getHeight()) / 2);
+	start_.render();
 }

@@ -3,6 +3,7 @@
 
 #include "GameScene/GameSceneManager.h"
 #include "CFRenderer.h"
+#include "ResourceManager.h"
 
 class GameSceneManager;
 
@@ -15,10 +16,11 @@ public:
 	virtual void update() = 0;
 	virtual void render() = 0;
 protected:
-	GameScene(GameSceneManager&, CFRenderer&);
+	GameScene(CFRenderer&, GameSceneManager&, ResourceManager&);
 	void changeScene(SceneID);
-	GameSceneManager& sceneManager_;
 	CFRenderer& renderer_;
+	GameSceneManager& sceneManager_;
+	ResourceManager& resManager_;
 };
 
 #endif

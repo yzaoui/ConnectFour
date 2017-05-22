@@ -4,8 +4,8 @@
 #include <SDL_mouse.h>
 #include <SDL_keyboard.h>
 
-SceneBoard::SceneBoard(GameSceneManager& sceneManager, CFRenderer& renderer) :
-	GameScene(sceneManager, renderer), boxEmpty_(renderer),
+SceneBoard::SceneBoard(CFRenderer& renderer, GameSceneManager& sceneManager, ResourceManager& resManager) :
+	GameScene(renderer, sceneManager, resManager), boxEmpty_(renderer),
 	boxYellow_(renderer), boxRed_(renderer) {
 	boxEmpty_.loadFromFile("C4Empty.png");
 	boxYellow_.loadFromFile("C4Yellow.png");
