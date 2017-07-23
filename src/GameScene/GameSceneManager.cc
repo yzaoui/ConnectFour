@@ -12,8 +12,8 @@ void GameSceneManager::handleEvents() {
 
 void GameSceneManager::render() {
 	if (!GameSceneManager::isEmpty()) {
-		for (auto i = scenes_.begin(); i != scenes_.end(); i++) {
-			(*i)->render();
+		for (auto &scene : scenes_) {
+			scene->render();
 		}
 	}
 }
@@ -33,12 +33,12 @@ void GameSceneManager::changeScene(SceneID id) {
 	delete scenes_.back();
 	scenes_.pop_back();
 
-	GameSceneManager::pushScene(id);
+	this->pushScene(id);
 }
 
 void GameSceneManager::emptyScenes() {
-	for (auto i = scenes_.begin(); i != scenes_.end(); i++) {
-		delete *i;
+	for (auto &scene : scenes_) {
+		delete scene;
 	}
 	scenes_.clear();
 }
