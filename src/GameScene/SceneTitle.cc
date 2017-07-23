@@ -1,5 +1,6 @@
 #include "GameScene/SceneTitle.h"
 
+#include <functional>
 #include <SDL_events.h>
 #include <SDL_keyboard.h>
 #include <SDL_mouse.h>
@@ -10,19 +11,39 @@ SceneTitle::SceneTitle(CFRenderer& renderer, GameSceneManager& sceneManager, Res
 		background_.loadFromFile("C4Background.png");
 		background_.setScale(4);
 		title_.loadFromFile("C4Connect4.png");
+
         start_ = Button(resManager.load("MenuButton.png"));
-        quit_ = Button(resManager.load("MenuButtonDefault.png"));
-	}
+		start_.addClickEvent([this]() -> void {
+			sceneManager_.changeScene(SceneID::BOARD);
+		});
+		start_.setXY((renderer_.getWindowWidth() - start_.getWidth()) / 2, (renderer_.getWindowHeight() - start_.getHeight()) / 2);
+
+
+		quit_ = Button(resManager.load("MenuButton.png"));
+		quit_.addClickEvent([this]() -> void {
+			sceneManager_.emptyScenes();
+		});
+		quit_.setXY((renderer_.getWindowWidth() - quit_.getWidth()) / 2, (renderer_.getWindowHeight() - quit_.getHeight()) / 2 + quit_.getHeight() * 2);
+}
 
 void SceneTitle::handleEvents() {
-	SDL_Event e;
+	SDL_Event e{};
 
 	while (SDL_PollEvent(&e) != 0) {
-		if (e.type == SDL_MOUSEBUTTONDOWN) {
-			sceneManager_.changeScene(SceneID::BOARD);
-		} else if (e.type == SDL_QUIT ||
+		if (e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEMOTION) {
+			bool consumed;
+
+			consumed = start_.handleEvent(e);
+			if (consumed) continue;
+
+			consumed = quit_.handleEvent(e);
+			if (consumed) continue;
+		}
+
+		if (e.type == SDL_QUIT ||
 			(e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE)) {
 			sceneManager_.emptyScenes();
+			break;
 		}
 	}
 }
@@ -41,8 +62,8 @@ void SceneTitle::render() {
 	// The number of tiles is the amount of tiles that can fit horizontally and vertically,
 	// while adding an extra row and column to make room for the scrolling animation.
 	// The ratio should be rounded up to the nearest integer.
-	const int numTilesX = ((windowW % tileW) ? windowW / tileW + 1 : windowW / tileW) + 1;
-	const int numTilesY = ((windowH % tileH) ? windowH / tileH + 1 : windowH / tileH) + 1;
+	const int numTilesX = ((windowW % tileW > 0) ? windowW / tileW + 1 : windowW / tileW) + 1;
+	const int numTilesY = ((windowH % tileH > 0) ? windowH / tileH + 1 : windowH / tileH) + 1;
 
 	static int frameCount = 0;
 
@@ -64,6 +85,6 @@ void SceneTitle::render() {
 	/*************************
 	 * RENDER BUTTONS
 	 ************************/
-	start_.setXY((windowW - start_.getWidth()) / 2, (windowH - start_.getHeight()) / 2);
 	start_.render();
+	quit_.render();
 }

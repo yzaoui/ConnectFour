@@ -59,7 +59,7 @@ void CFGameEngine::run() {
 
 	sceneManager.pushScene(SceneID::TITLE);
 
-	Uint32 frameTime; //Platform-dependant, uint8_t may not exist
+	Uint32 frameTime;
 
 	while (true) {
 		frameTime = SDL_GetTicks();
