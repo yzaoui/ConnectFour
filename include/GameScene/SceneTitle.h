@@ -10,7 +10,7 @@
 class SceneTitle : public GameScene {
 public:
 	SceneTitle(CFRenderer&, GameSceneManager&, ResourceManager&);
-	void handleEvents();
+	void handleEvent(SDL_Event &e);
 	void update();
 	void render();
 private:

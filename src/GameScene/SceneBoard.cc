@@ -1,8 +1,6 @@
 #include "GameScene/SceneBoard.h"
 
-#include <SDL_events.h>
-#include <SDL_mouse.h>
-#include <SDL_keyboard.h>
+#include <SDL.h>
 
 SceneBoard::SceneBoard(CFRenderer& renderer, GameSceneManager& sceneManager, ResourceManager& resManager) :
 	GameScene(renderer, sceneManager, resManager), boxEmpty_(renderer),
@@ -18,21 +16,17 @@ SceneBoard::SceneBoard(CFRenderer& renderer, GameSceneManager& sceneManager, Res
 	BOARD_OFFSET_HEIGHT = (renderer_.getWindowHeight() - BOX_SIZE * NUM_BOXES_VERTICAL) / 2;
 }
 
-void SceneBoard::handleEvents() {
-	SDL_Event e;
+void SceneBoard::handleEvent(SDL_Event &e) {
+	if (e.type == SDL_QUIT) {
+		sceneManager_.quit();
+	} else if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE) {
+		sceneManager_.changeScene(SceneID::TITLE);
+	} else if (e.type == SDL_MOUSEBUTTONDOWN) {
+		int mouseX;
+		SDL_GetMouseState(&mouseX, nullptr);
 
-	while (SDL_PollEvent(&e) != 0) {
-		if (e.type == SDL_QUIT) {
-			sceneManager_.emptyScenes();
-		} else if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE) {
-			sceneManager_.changeScene(SceneID::TITLE);
-		} else if (e.type == SDL_MOUSEBUTTONDOWN) {
-			int mouseX;
-			SDL_GetMouseState(&mouseX, nullptr);
-
-			if (mouseX > BOARD_OFFSET_WIDTH && mouseX < renderer_.getWindowWidth() - BOARD_OFFSET_WIDTH) {
-				board_.play((mouseX - BOARD_OFFSET_WIDTH) / BOX_SIZE);
-			}
+		if (mouseX > BOARD_OFFSET_WIDTH && mouseX < renderer_.getWindowWidth() - BOARD_OFFSET_WIDTH) {
+			board_.play((mouseX - BOARD_OFFSET_WIDTH) / BOX_SIZE);
 		}
 	}
 }

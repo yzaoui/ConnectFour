@@ -1,7 +1,8 @@
 #ifndef _GAMESCENE_GAMESCENEMANAGER_H
 #define _GAMESCENE_GAMESCENEMANAGER_H
 
-#include <vector>
+#include <forward_list>
+#include <SDL_events.h>
 
 #include "GameScene/GameScene.h"
 #include "CFRenderer.h"
@@ -13,16 +14,19 @@ enum class SceneID;
 class GameSceneManager {
 public:
 	explicit GameSceneManager(CFRenderer&, ResourceManager&);
-	void handleEvents();
+	virtual ~GameSceneManager();
+	void handleEvent(SDL_Event &e);
 	void render();
 	void changeScene(SceneID);
 	void pushScene(SceneID);
-	void emptyScenes();
 	bool isEmpty();
+	void quit();
+	bool onLoop();
 private:
-	std::vector<GameScene*> scenes_;
+	std::forward_list<GameScene*> scenes_;
 	CFRenderer& renderer_;
 	ResourceManager resManager_;
+	bool willExit_;
 };
 
 #endif

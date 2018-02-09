@@ -10,7 +10,7 @@
 class SceneBoard : public GameScene {
 public:
 	SceneBoard(CFRenderer&, GameSceneManager&, ResourceManager&);
-	void handleEvents();
+	void handleEvent(SDL_Event &e);
 	void update();
 	void render();
 private:

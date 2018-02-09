@@ -4,16 +4,32 @@
 #include "GameScene/SceneTitle.h"
 
 GameSceneManager::GameSceneManager(CFRenderer& renderer, ResourceManager& resManager) :
-	renderer_(renderer), resManager_(resManager) {}
+	renderer_(renderer), resManager_(resManager), willExit_(false) {}
 
-void GameSceneManager::handleEvents() {
-	scenes_.back()->handleEvents();
+GameSceneManager::~GameSceneManager() {
+	for (auto &scene : scenes_) {
+		delete scene;
+	}
+	scenes_.clear();
+}
+
+void GameSceneManager::handleEvent(SDL_Event& e) {
+	for (auto &scene : scenes_) {
+		if (!scene->isMarkedForDeletion()) {
+			scene->handleEvent(e);
+		} else {
+			delete scene;
+			scenes_.remove(scene);
+		}
+	}
 }
 
 void GameSceneManager::render() {
 	if (!GameSceneManager::isEmpty()) {
 		for (auto &scene : scenes_) {
-			scene->render();
+			if (!scene->isMarkedForDeletion()) {
+				scene->render();
+			}
 		}
 	}
 }
@@ -21,28 +37,37 @@ void GameSceneManager::render() {
 void GameSceneManager::pushScene(SceneID id) {
 	switch(id) {
 		case SceneID::TITLE:
-			scenes_.push_back(new SceneTitle(renderer_, *this, resManager_));
+			scenes_.push_front(new SceneTitle(renderer_, *this, resManager_));
 			break;
 		case SceneID::BOARD:
-			scenes_.push_back(new SceneBoard(renderer_, *this, resManager_));
+			scenes_.push_front(new SceneBoard(renderer_, *this, resManager_));
 			break;
 	}
 }
 
 void GameSceneManager::changeScene(SceneID id) {
-	delete scenes_.back();
-	scenes_.pop_back();
+	scenes_.front()->markForDeletion();
 
 	this->pushScene(id);
 }
 
-void GameSceneManager::emptyScenes() {
-	for (auto &scene : scenes_) {
-		delete scene;
-	}
-	scenes_.clear();
-}
-
 bool GameSceneManager::isEmpty() {
 	return scenes_.empty();
+}
+
+void GameSceneManager::quit() {
+	willExit_ = true;
+}
+
+bool GameSceneManager::onLoop() {
+	if (willExit_) return false;
+
+	for (auto &scene : scenes_) {
+		if (scene->isMarkedForDeletion()) {
+			delete scene;
+			scenes_.remove(scene);
+		}
+	}
+
+	return true;
 }

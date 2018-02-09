@@ -10,10 +10,30 @@
 #include "CFTexture.h"
 #include "GameBoard.h"
 
-CFGameEngine::CFGameEngine() : window_(nullptr), renderer_(nullptr), resManager_(nullptr) {
+CFGameEngine::CFGameEngine() : window_(nullptr), renderer_(nullptr), resManager_(nullptr), sceneManager_(nullptr) {}
+
+CFGameEngine::~CFGameEngine() {
+	delete resManager_;
+	resManager_ = nullptr;
+
+	//TODO: RAII
+	renderer_->close();
+	renderer_ = nullptr;
+
+	window_->close();
+	window_ = nullptr;
+
+	delete sceneManager_;
+	sceneManager_ = nullptr;
+
+	SDL_Quit();
+}
+
+bool CFGameEngine::OnInit() {
 	/* Initialize SDL */
-	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
+	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
 		//Error: SDL_Init
+		return false;
 	}
 
 	/* Linear Texture Filtering */
@@ -28,38 +48,53 @@ CFGameEngine::CFGameEngine() : window_(nullptr), renderer_(nullptr), resManager_
 
 	/* Initialize PNG loading */
 	const int imgFlags = IMG_INIT_PNG;
-	if (!(IMG_Init(imgFlags) & imgFlags)) {
+	if ((IMG_Init(imgFlags) & imgFlags) == 0) {
 		//Log error: IMG_Init
+		return false;
 	}
 
 	/* Initialize SDL_ttf */
-	if (TTF_Init() == -1) {
+	if (TTF_Init() < 0) {
 		//Log error: TTF_Init
+		return false;
 	}
 
 	resManager_ = new ResourceManager(*renderer_);
+
+	sceneManager_ = new GameSceneManager(*renderer_, *resManager_);
+
+	return true;
 }
 
-CFGameEngine::~CFGameEngine() {
-	delete resManager_;
-	resManager_ = nullptr;
-
-	//TODO: RAII
-	renderer_->close();
-	renderer_ = nullptr;
-
-	window_->close();
-	window_ = nullptr;
-
-	SDL_Quit();
+void CFGameEngine::OnEvent(SDL_Event &e) {
+	sceneManager_->handleEvent(e);
 }
 
-void CFGameEngine::run() {
-	GameSceneManager sceneManager(*renderer_, *resManager_);
+bool CFGameEngine::OnLoop() {
+	return sceneManager_->onLoop();
+}
 
-	sceneManager.pushScene(SceneID::TITLE);
+void CFGameEngine::OnRender() {
+	renderer_->clear();
+
+	sceneManager_->render();
+
+	renderer_->present();
+}
+
+void CFGameEngine::OnCleanup() {
+
+}
+
+int CFGameEngine::OnExecute() {
+	if (!OnInit()) {
+		return -1;
+	}
+
+	sceneManager_->pushScene(SceneID::TITLE);
 
 	Uint32 frameTime;
+	SDL_Event event{};
 
 	while (true) {
 		frameTime = SDL_GetTicks();
@@ -68,21 +103,17 @@ void CFGameEngine::run() {
 		 * INPUT
 		 ***************/
 
-		sceneManager.handleEvents();
-
-		if (sceneManager.isEmpty()) {
-			break;
+		while (SDL_PollEvent(&event) != 0) {
+			OnEvent(event);
 		}
+
+		if (!OnLoop()) break;
 
 		/***************
 		 * RENDERING
 		 ***************/
 
-		renderer_->clear();
-
-		sceneManager.render();
-
-		renderer_->present();
+		OnRender();
 
 		/***************
 		 * TIMING
@@ -94,4 +125,6 @@ void CFGameEngine::run() {
 			SDL_Delay((Uint32) (1000.0 / 60.0 - ticks));
 		}
 	}
+
+	return 0;
 }

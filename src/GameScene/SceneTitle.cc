@@ -1,10 +1,6 @@
 #include "GameScene/SceneTitle.h"
 
-#include <functional>
-#include <SDL_events.h>
-#include <SDL_keyboard.h>
-#include <SDL_mouse.h>
-#include <SDL_rect.h>
+#include <SDL.h>
 
 SceneTitle::SceneTitle(CFRenderer& renderer, GameSceneManager& sceneManager, ResourceManager& resManager) :
 	GameScene(renderer, sceneManager, resManager), title_(renderer), background_(renderer), start_(nullptr), quit_(nullptr) {
@@ -21,30 +17,20 @@ SceneTitle::SceneTitle(CFRenderer& renderer, GameSceneManager& sceneManager, Res
 
 		quit_ = Button(resManager.load("MenuButton.png"));
 		quit_.addClickEvent([this]() -> void {
-			sceneManager_.emptyScenes();
+			sceneManager_.quit();
 		});
 		quit_.setXY((renderer_.getWindowWidth() - quit_.getWidth()) / 2, (renderer_.getWindowHeight() - quit_.getHeight()) / 2 + quit_.getHeight() * 2);
 }
 
-void SceneTitle::handleEvents() {
-	SDL_Event e{};
+void SceneTitle::handleEvent(SDL_Event &e) {
+	if (e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEMOTION) {
+		start_.handleEvent(e);
+		quit_.handleEvent(e);
+	}
 
-	while (SDL_PollEvent(&e) != 0) {
-		if (e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEMOTION) {
-			bool consumed;
-
-			consumed = start_.handleEvent(e);
-			if (consumed) continue;
-
-			consumed = quit_.handleEvent(e);
-			if (consumed) continue;
-		}
-
-		if (e.type == SDL_QUIT ||
-			(e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE)) {
-			sceneManager_.emptyScenes();
-			break;
-		}
+	if (e.type == SDL_QUIT ||
+		(e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE)) {
+		sceneManager_.quit();
 	}
 }
 
