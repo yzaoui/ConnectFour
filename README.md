@@ -1,4 +1,10 @@
-# SDL Testing
+# Connect Four
+
+## Description
+
+A basic Connect Four implementation using a game engine built with SDL2.
+
+![Animation of title screen](title_screen.gif)
 
 ## Setup
 
